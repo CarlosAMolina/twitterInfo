@@ -11,7 +11,7 @@ Retrieved values:
 - Retweets
 
 Example
-- TWEETS:
+- TWEETS:<br />
 https://twitter.com/StackOverflow/status/910133441286496256<br />
 https://twitter.com/github/status/913139368818331648<br />
 https://twitter.com/DisneySpain/status/915517354477592576<br />
