@@ -24,7 +24,7 @@ except:
 
 # values
 
-tweetsURLfile = 'twitterTweepy_tweetsURL.txt'
+tweetsURLfile = 'tweetsURL.txt'
 
 CONSUMER_KEY = ''
 CONSUMER_SECRET = ''
@@ -42,6 +42,7 @@ def checksAndAlerts():
         return 0
     if checkFileExists (tweetsURLfile) == 0:
         print 'Error. File "',tweetsURLfile,'" does not exist'
+        return 0
     return 1
 
 def getApi():
@@ -55,7 +56,7 @@ def checkFileExists(filePathAndName):
         open(filePathAndName,'r') # file name and extension
         return 1
     except:
-        return -1
+        return 0
 
 def getFileContentList (fileNameWithExtension):
     fileOpened = open(fileNameWithExtension)
