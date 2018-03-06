@@ -1,16 +1,18 @@
 # twitterInfo
 These scripts retrieve information from several tweets.
 
-Note: independent scripts. Different scripts to avoid problems with each computer configuration.
+**Usage**
+- Run one of the two python scripts. Example: python twitterTweepy.py
+- Note. Independent scripts. Different scripts to avoid problems with the configuration of each computer.
 
-Retrieved values:
+**Retrieved values**
 - User
 - Handle
 - Followers
 - Likes
 - Retweets
 
-Example
+**Example**
 - TWEETS:<br />
 https://twitter.com/StackOverflow/status/910133441286496256<br />
 https://twitter.com/github/status/913139368818331648<br />
