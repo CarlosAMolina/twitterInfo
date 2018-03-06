@@ -10,8 +10,11 @@
 # - twitter and tweepy api reference:
 # https://developer.twitter.com/en/docs/api-reference-index
 # http://docs.tweepy.org/en/v3.5.0/api.html
-# - number with commas as thousands separators:
+# - functions
+# -- number with commas as thousands separators:
 # https://stackoverflow.com/questions/1823058/how-to-print-number-with-commas-as-thousands-separators
+# -- delete list values
+# https://stackoverflow.com/questions/2793324/is-there-a-simple-way-to-delete-a-list-element-by-value
 
 try:
     import tweepy
@@ -19,16 +22,14 @@ try:
 except:
     tweepyInstalled = 0
 
+# values
+
+tweetsURLfile = 'twitterTweepy_tweetsURL.txt'
+
 CONSUMER_KEY = ''
 CONSUMER_SECRET = ''
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET = ''
-
-TWEETS = [
-'https://twitter.com/StackOverflow/status/910133441286496256',
-'https://twitter.com/github/status/913139368818331648',
-'https://twitter.com/DisneySpain/status/915517354477592576'
-]
 
 # functions
 
@@ -37,8 +38,10 @@ def checksAndAlerts():
         print 'Error. Install tweepy'
         return 0
     if CONSUMER_KEY == '' or CONSUMER_SECRET == '' or ACCESS_TOKEN == '' or ACCESS_TOKEN_SECRET == '':
-        print 'Error. Not Twitter app credentials'
+        print 'Error. No Twitter app credentials'
         return 0
+    if checkFileExists (tweetsURLfile) == 0:
+        print 'Error. File "',tweetsURLfile,'" does not exist'
     return 1
 
 def getApi():
@@ -46,6 +49,21 @@ def getApi():
     AUTH.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     api = tweepy.API(AUTH)
     return api
+
+def checkFileExists(filePathAndName):
+    try:
+        open(filePathAndName,'r') # file name and extension
+        return 1
+    except:
+        return -1
+
+def getFileContentList (fileNameWithExtension):
+    fileOpened = open(fileNameWithExtension)
+    fileContent = fileOpened.read()
+    fileOpened.close()
+    fileContentList = fileContent.split('\n')
+    fileContentList = [listValue for listValue in fileContentList if listValue != ''] # delete blank rows
+    return fileContentList
 
 def getTweetValues(TWEET):
     TWEETID = int(TWEET.split('/')[-1])
@@ -70,6 +88,7 @@ def getTweetInfo(TWEETID):
 
 if checksAndAlerts() == 1:
     api = getApi()
+    TWEETS = getFileContentList(tweetsURLfile)
     for TWEET in TWEETS:
         TWEETID, HANDLE = getTweetValues(TWEET)
         USER, FOLLOWERS = getUserInfo(HANDLE)
