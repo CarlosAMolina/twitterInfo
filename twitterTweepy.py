@@ -24,6 +24,10 @@ except:
 
 # values
 
+languageSpanish = 's'
+languageEnglish = 'e'
+language = [languageSpanish] # select the desired language. Type list to allow selecting more than one
+
 tweetsURLfile = 'tweetsURL.txt'
 
 CONSUMER_KEY = ''
@@ -85,15 +89,21 @@ def getTweetInfo(TWEETID):
     LIKES = TWEETINFO.favorite_count
     return RETWEETS, LIKES
 
+def showResults(TWEETS, language):
+    for TWEET in TWEETS:
+        TWEETID, HANDLE = getTweetValues(TWEET)
+        USER, FOLLOWERS = getUserInfo(HANDLE)
+        RETWEETS, LIKES = getTweetInfo(TWEETID)
+        if languageSpanish in language:
+            print 'Usuario: ' + USER + '. Handle: @' + HANDLE + '. Seguidores: ' + FOLLOWERS + u'. Retweets publicación: ' + str(RETWEETS) + u'. Likes publicación: ' + str(LIKES) + u'. Dirección publicación:'
+        if languageEnglish in language:
+            print 'User: ' + USER + '. Handle: @' + HANDLE + '. Followers: ' + FOLLOWERS + '. Retweets: ' + str(RETWEETS) + '. Likes: ' + str(LIKES) + '. Post:'
+        print TWEET
+        print ''
+
 # main
 
 if checksAndAlerts() == 1:
     api = getApi()
     TWEETS = getFileContentList(tweetsURLfile)
-    for TWEET in TWEETS:
-        TWEETID, HANDLE = getTweetValues(TWEET)
-        USER, FOLLOWERS = getUserInfo(HANDLE)
-        RETWEETS, LIKES = getTweetInfo(TWEETID)
-        print 'Usuario: ' + USER + '. Handle: @' + HANDLE + '. Seguidores: ' + FOLLOWERS + u'. Retweets publicación: ' + str(RETWEETS) + u'. Likes publicación: ' + str(LIKES) + u'. Dirección publicación:'
-        print TWEET
-        print ''
+    showResults(TWEETS, language)
