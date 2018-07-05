@@ -2,8 +2,9 @@
 These scripts retrieve information from several tweets.
 
 **Usage**
-- Run one of the two python scripts. Example: python twitterTweepy.py
+- Run one of the two python scripts. Example: python twitterTweepy.py -s
 - Note. Independent scripts. Different scripts to avoid problems with the configuration of each computer.
+- twitterTweepy.py can display the results in Spanish (-e) or in English (default language).
 
 **Retrieved values**
 - User

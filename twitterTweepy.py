@@ -16,6 +16,7 @@
 # -- delete list values
 # https://stackoverflow.com/questions/2793324/is-there-a-simple-way-to-delete-a-list-element-by-value
 
+import sys
 try:
     import tweepy
     tweepyInstalled = 1
@@ -24,9 +25,8 @@ except:
 
 # values
 
-languageSpanish = 's'
-languageEnglish = 'e'
-language = [languageSpanish] # select the desired language. Type list to allow selecting more than one
+languageSpanish = '-s' # python twitterTweepy.py -s
+#languageEnglish = '-e' # python twitterTweepy.py -e. Default language
 
 tweetsURLfile = 'tweetsURL.txt'
 
@@ -89,14 +89,18 @@ def getTweetInfo(TWEETID):
     LIKES = TWEETINFO.favorite_count
     return RETWEETS, LIKES
 
-def showResults(TWEETS, language):
+def showResults(TWEETS):
+    try:
+        language = sys.argv[1]
+    except:
+        language = ''
     for TWEET in TWEETS:
         TWEETID, HANDLE = getTweetValues(TWEET)
         USER, FOLLOWERS = getUserInfo(HANDLE)
         RETWEETS, LIKES = getTweetInfo(TWEETID)
-        if languageSpanish in language:
+        if language == languageSpanish:
             print 'Usuario: ' + USER + '. Handle: @' + HANDLE + '. Seguidores: ' + FOLLOWERS + u'. Retweets publicación: ' + str(RETWEETS) + u'. Likes publicación: ' + str(LIKES) + u'. Dirección publicación:'
-        if languageEnglish in language:
+        else: # English is the default language
             print 'User: ' + USER + '. Handle: @' + HANDLE + '. Followers: ' + FOLLOWERS + '. Retweets: ' + str(RETWEETS) + '. Likes: ' + str(LIKES) + '. Post:'
         print TWEET
         print ''
@@ -106,4 +110,4 @@ def showResults(TWEETS, language):
 if checksAndAlerts() == 1:
     api = getApi()
     TWEETS = getFileContentList(tweetsURLfile)
-    showResults(TWEETS, language)
+    showResults(TWEETS)
